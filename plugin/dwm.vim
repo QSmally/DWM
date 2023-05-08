@@ -225,6 +225,11 @@ endif
 if has('autocmd')
   augroup dwm
     au!
-    au BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM_AutoEnter() | endif
+    if v:this_session != ''
+        au SessionLoadPost
+            \ au BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM_AutoEnter() | endif
+    else
+        au BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM_AutoEnter() | endif
+    endif
   augroup end
 endif

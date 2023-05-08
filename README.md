@@ -1,10 +1,13 @@
-### dwm.vim : Tiled Window Management for Vim
 
-dwm.vim adds tiled window management capabilities to Vim. It is highly inspired by [dwm](http://dwm.suckless.org/) (Dynamic Window Manager) tiled layout management. 
+# Tiling window manager for Vim
 
-Download page on vim.org: http://www.vim.org/scripts/script.php?script_id=4186
+`dwm.vim` adds tiled window management to Vim. It is highly inspired by [dwm](http://dwm.suckless.org/)
+(Dynamic Window Manager) tiled layout management.
 
-Windows are always organised as follows: 
+Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
+contributions.
+
+Layouts are always organised as follows:
 
 ```
 ===================================
@@ -16,23 +19,25 @@ Windows are always organised as follows:
 ===================================
 ```
 
-Use the following commands to create, browse and close windows: 
+* `C-N` - creates a new empty window and places it in the master pane [M] and stacks all previous windows in the stacked pane [S],
+* `C-C` - closes the current window if there are no unsaved changes,
+* `C-J` - jumps to next window (clockwise),
+* `C-K` - jumps to previous window (counter-clockwise),
+* `C-H` - contracts the master pane [M] area,
+* `C-L` - expands the master pane [M] area,
+* `C-Space` - focusses the current window, that is, place it in the master pane [M] and stacks all other windows in the stacked pane [S].
 
-- `C-N` Creates a new window and place it in the master pane [M] & stacks all previous windows in the stacked pane [S]
-- `C-C` Close the current window if no unsaved changes 
-- `C-J` Jumps to next window (clockwise) 
-- `C-K` Jumps to previous window (anti-clockwise) 
-- `C-Space` Focus the current window, that is, place it in the master pane [M] & stacks all other windows in the stacked pane [S]
+**Todo** for the fork of DWM:
 
-### ScreenShot
+* 80 column width for floating windows (help, fugitive, etc),
+* `:DWM` command to toggle functionality (and save it to a session),
+* `:New <file>` to act like `C-N` but populate it with a buffer, or empty if no argument given.
 
 ![](http://i.imgur.com/TKL4i.png)
 
 ### Installation
 
-Install to `~/.vim/plugin/dwm.vim`.
-
-Or copy and paste:
+Install to `~/.vim/plugin/dwm.vim` or use Vim-Plug, `Plug 'QSmally/DWM'`.
 
 ```
 mkdir -p ~/.vim/plugin ~/.vim/doc; \

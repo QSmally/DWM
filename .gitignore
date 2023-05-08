@@ -1,4 +1,9 @@
+
+# System
 .DS_Store
+
+# File editor
 *.swp
 *~
+Session.vim
 /doc/tags

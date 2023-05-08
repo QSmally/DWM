@@ -9,13 +9,12 @@
 "               the use of this software.
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
-"   Maintainer: Stanislas Polu (polu.stanislas at gmail dot com)
-" Last Changed: Tuesday, 23 August 2012
+"   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
+" Last Changed: Monday, 8 August 2023
 "      Version: See g:dwm_version for version number.
 "        Usage: This file should reside in the plugin directory and be
-"               automatically sourced.
-"
-"               For more help see supplied documentation.
+"               automatically sourced. For more help see supplied
+"               documentation.
 "      History: See supplied documentation.
 "==============================================================================
 

@@ -12,9 +12,9 @@ Layouts are always organised as follows:
 ```
 ===================================
 |              |        S1        | 
-|              |===================
+|              |==================|
 |      M       |        S2        | 
-|              |===================
+|              |==================|
 |              |        S3        | 
 ===================================
 ```
@@ -30,8 +30,8 @@ Layouts are always organised as follows:
 **Todo** for the fork of DWM:
 
 * 80 column width for floating windows (help, fugitive, etc),
+* `[window]C-Space` to focus a window which is on the stacked pane [S],
 * `:DWM` command to toggle functionality (and save it to a session),
-* `:New <file>` to act like `C-N` but populate it with a buffer, or empty if no argument given.
 
 ![](http://i.imgur.com/TKL4i.png)
 

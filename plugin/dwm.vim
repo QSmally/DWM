@@ -1,3 +1,4 @@
+
 "==============================================================================
 "    Copyright: Copyright (C) 2012 Stanislas Polu an other Contributors
 "               Permission is hereby granted to use and distribute this code,
@@ -11,28 +12,25 @@
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
 " Last Changed: Monday, 8 August 2023
-"      Version: See g:dwm_version for version number.
+"      Version: 0.2.0 (fork)
 "        Usage: This file should reside in the plugin directory and be
-"               automatically sourced. For more help see supplied
+"               automatically sourced. For more help, see supplied
 "               documentation.
 "      History: See supplied documentation.
 "==============================================================================
 
-" Exit quickly if already running
-if exists("g:dwm_version") || &diff || &cp
-  finish
+if exists("g:loaded_dwm") || &diff || &cp || v:version < 700
+    finish
 endif
 
-let g:dwm_version = "0.1.2"
+let g:loaded_dwm = 1
 
-" Check for Vim version 700 or greater {{{1
-if v:version < 700
-  echo "Sorry, dwm.vim ".g:dwm_version."\nONLY runs with Vim 7.0 and greater."
-  finish
-endif
-
+"
 " All layout transformations assume the layout contains one master pane on the
-" left and an arbitrary number of stacked panes on the right
+" left and an arbitrary number of stacked panes on the right. The function
+" DWM#FixWindowLayout() transforms a wrongly-put window layout to the fixed
+" margins depending on their winnr's.
+"
 " +--------+--------+
 " |        |   S1   |
 " |        +--------+
@@ -40,98 +38,107 @@ endif
 " |        +--------+
 " |        |   S3   |
 " +--------+--------+
+"
 
-" Move the current master pane to the stack
-function! DWM_Stack(clockwise)
-  1wincmd w
-  if a:clockwise
-    " Move to the top of the stack
-    wincmd K
-  else
-    " Move to the bottom of the stack
-    wincmd J
-  endif
-  " At this point, the layout *should* be the following with the previous master
-  " at the top.
-  " +-----------------+
-  " |        M        |
-  " +-----------------+
-  " |        S1       |
-  " +-----------------+
-  " |        S2       |
-  " +-----------------+
-  " |        S3       |
-  " +-----------------+
+"
+" Transitions the current master pane to either the top or bottom of the stack
+" pane. At the end, the layout should be the following with the master pane
+" being at the top or bottom.
+"
+" +-----------------+
+" |        M        |
+" +-----------------+
+" |        S1       |
+" +-----------------+
+" |        S2       |
+" +-----------------+
+" |        S3       |
+" +-----------------+
+"
+function! DWM#StackMaster(top)
+    1wincmd w
+    if a:top
+        wincmd K
+    else
+        wincmd J
+    endif
 endfunction
 
-" Add a new buffer
-function! DWM_New()
-  " Move current master pane to the stack
-  call DWM_Stack(1)
-  " Create a vertical split
+"
+" Empty buffer viewport added as the new master pane, moving the old master
+" pane to the top of the stack pane.
+"
+" TODO: Accept filename to populate window with buffer contents
+"
+function! DWM#NewWindow()
+  call DWM#StackMaster(1)
   vert topleft new
-  call DWM_ResizeMasterPaneWidth()
+  call DWM#ResizeMasterPaneWidth()
 endfunction
 
-" Move the current window to the master pane (the previous master window is
-" added to the top of the stack). If current window is master already - switch
-" to stack top
-function! DWM_Focus()
-  if winnr('$') == 1
-    return
-  endif
+"
+" Move the current window to the master pane (assuming that the previous master
+" window is added to the top of the stack from DWM#StackMaster()). If current
+" window is master already, the stack top is elected to be swapped with the
+" master pane.
+"
+function! DWM#FocusWindow()
+    if winnr('$') == 1
+        return
+    endif
 
-  if winnr() == 1
-    wincmd w
-  endif
+    if winnr() == 1
+        wincmd w
+    endif
 
-  let l:curwin = winnr()
-  call DWM_Stack(1)
-  exec l:curwin . "wincmd w"
-  wincmd H
-  call DWM_ResizeMasterPaneWidth()
+    let l:curwin = winnr()
+    call DWM#StackMaster(1)
+    exec l:curwin . "wincmd w"
+    wincmd H
+    call DWM#ResizeMasterPaneWidth()
 endfunction
 
-" Handler for BufWinEnter autocommand
-" Recreate layout broken by new window
-function! DWM_AutoEnter()
-  if winnr('$') == 1
+"
+" Redraws the window layout, which is used by the BufWinEnter autocommand
+" whenever a new window was added.
+"
+function! DWM#FixWindowLayout()
+  if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix'
     return
   endif
 
-  " Skip buffers without filetype
-  if !len(&l:filetype)
-    return
-  endif
-
-  " Skip quickfix buffers
-  if &l:buftype == 'quickfix'
-    return
-  endif
-
-  " Move new window to stack top
+  " Mark: move new window to stack top
   wincmd K
 
-  " Focus new window (twice :)
-  call DWM_Focus()
-  call DWM_Focus()
+  " Mark: refocus new window
+  call DWM#FocusWindow()
+  call DWM#FocusWindow()
 endfunction
 
-" Close the current window
-function! DWM_Close()
-  if winnr() == 1
-    " Close master panel.
-    return 'close | wincmd H | call DWM_ResizeMasterPaneWidth()'
-  else
-    return 'close'
-  end
+"
+" Exits the current window, and if it were to be the master pane, it also
+" redraws the layout. In that case, the top of the stack pane will take the
+" position of the master pane.
+"
+function! DWM#CloseWindowCommand()
+    if winnr() == 1
+        " Mark: close the master panel
+        return 'close | wincmd H | call DWM#ResizeMasterPaneWidth()'
+    else
+        return 'close'
+    end
 endfunction
 
-function! DWM_ResizeMasterPaneWidth()
-  " Make all windows equally high and wide
+"
+" Adjusts the split between the master and stack panes by changing the width
+" of the master pane. If 'g:dwm_master_pane_width' is defined, the panes will
+" be resized accordingly, otherwise it will be a 50% split.
+"
+function! DWM#ResizeMasterPaneWidth()
+  " Mark: all windows equally tall and wide
   wincmd =
 
-  " resize the master pane if user defined it
+  " Mark: resize the master pane if the user defined it
   if exists('g:dwm_master_pane_width')
     if type(g:dwm_master_pane_width) == type("")
       exec 'vertical resize ' . ((str2nr(g:dwm_master_pane_width)*&columns)/100)
@@ -141,95 +148,108 @@ function! DWM_ResizeMasterPaneWidth()
   endif
 endfunction
 
-function! DWM_GrowMaster()
-  if winnr() == 1
-    exec "vertical resize +1"
-  else
-    exec "vertical resize -1"
-  endif
-  if exists("g:dwm_master_pane_width") && g:dwm_master_pane_width
-    let g:dwm_master_pane_width += 1
-  else
-    let g:dwm_master_pane_width = ((&columns)/2)+1
-  endif
+"
+" Increases the width of the master pane.
+"
+" TODO: Combine grow and shrink into one argumented function
+"
+function! DWM#GrowMaster()
+    if winnr() == 1
+        exec "vertical resize +1"
+    else
+        exec "vertical resize -1"
+    endif
+
+    if exists("g:dwm_master_pane_width") && g:dwm_master_pane_width
+        let g:dwm_master_pane_width += 1
+    else
+        let g:dwm_master_pane_width = ((&columns)/2)+1
+    endif
 endfunction
 
-function! DWM_ShrinkMaster()
-  if winnr() == 1
-    exec "vertical resize -1"
-  else
-    exec "vertical resize +1"
-  endif
-  if exists("g:dwm_master_pane_width") && g:dwm_master_pane_width
-    let g:dwm_master_pane_width -= 1
-  else
-    let g:dwm_master_pane_width = ((&columns)/2)-1
-  endif
+"
+" Decreases the width of the master pane.
+"
+function! DWM#ShrinkMaster()
+    if winnr() == 1
+        exec "vertical resize -1"
+    else
+        exec "vertical resize +1"
+    endif
+
+    if exists("g:dwm_master_pane_width") && g:dwm_master_pane_width
+        let g:dwm_master_pane_width -= 1
+    else
+        let g:dwm_master_pane_width = ((&columns)/2)-1
+    endif
 endfunction
 
-function! DWM_Rotate(clockwise)
-  call DWM_Stack(a:clockwise)
-  if a:clockwise
-    wincmd W
-  else
-    wincmd w
-  endif
-  wincmd H
-  call DWM_ResizeMasterPaneWidth()
+"
+" Transforms the position of the windows by moving them either clockwise or
+" counter-clockwise depending on the input argument. Either the top or bottom
+" panel of the stack will take the position of the master pane.
+"
+function! DWM#Rotate(clockwise)
+    call DWM#StackMaster(a:clockwise)
+    if a:clockwise
+        wincmd W
+    else
+        wincmd w
+    endif
+
+    wincmd H
+    call DWM#ResizeMasterPaneWidth()
 endfunction
 
-nnoremap <silent> <Plug>DWMRotateCounterclockwise :call DWM_Rotate(0)<CR>
-nnoremap <silent> <Plug>DWMRotateClockwise        :call DWM_Rotate(1)<CR>
-
-nnoremap <silent> <Plug>DWMNew   :call DWM_New()<CR>
-nnoremap <silent> <Plug>DWMClose :exec DWM_Close()<CR>
-nnoremap <silent> <Plug>DWMFocus :call DWM_Focus()<CR>
-
-nnoremap <silent> <Plug>DWMGrowMaster   :call DWM_GrowMaster()<CR>
-nnoremap <silent> <Plug>DWMShrinkMaster :call DWM_ShrinkMaster()<CR>
+nnoremap <silent> <Plug>DWM#RotateCounterClockwise :call DWM#Rotate(0)<CR>
+nnoremap <silent> <Plug>DWM#RotateClockwise        :call DWM#Rotate(1)<CR>
+nnoremap <silent> <Plug>DWM#New                    :call DWM#NewWindow()<CR>
+nnoremap <silent> <Plug>DWM#Close                  :exec DWM#CloseWindowCommand()<CR>
+nnoremap <silent> <Plug>DWM#Focus                  :call DWM#FocusWindow()<CR>
+nnoremap <silent> <Plug>DWM#GrowMaster             :call DWM#GrowMaster()<CR>
+nnoremap <silent> <Plug>DWM#ShrinkMaster           :call DWM#ShrinkMaster()<CR>
 
 if !exists('g:dwm_map_keys')
-  let g:dwm_map_keys = 1
+    let g:dwm_map_keys = 1
 endif
 
 if g:dwm_map_keys
-  nnoremap <C-J> <C-W>w
-  nnoremap <C-K> <C-W>W
+    nnoremap <C-J> <C-W>w
+    nnoremap <C-K> <C-W>W
 
-  if !hasmapto('<Plug>DWMRotateCounterclockwise')
-      nmap <C-,> <Plug>DWMRotateCounterclockwise
-  endif
-  if !hasmapto('<Plug>DWMRotateClockwise')
-      nmap <C-.> <Plug>DWMRotateClockwise
-  endif
+    if !hasmapto('<Plug>DWM#RotateCounterClockwise')
+        nmap <C-<> <Plug>DWM#RotateCounterClockwise
+    endif
+    if !hasmapto('<Plug>DWM#RotateClockwise')
+        nmap <C->> <Plug>DWM#RotateClockwise
+    endif
 
-  if !hasmapto('<Plug>DWMNew')
-      nmap <C-N> <Plug>DWMNew
-  endif
-  if !hasmapto('<Plug>DWMClose')
-      nmap <C-C> <Plug>DWMClose
-  endif
-  if !hasmapto('<Plug>DWMFocus')
-      nmap <C-@> <Plug>DWMFocus
-      nmap <C-Space> <Plug>DWMFocus
-  endif
+    if !hasmapto('<Plug>DWM#New')
+        nmap <C-N> <Plug>DWM#New
+    endif
+    if !hasmapto('<Plug>DWM#Close')
+        nmap <C-C> <Plug>DWM#Close
+    endif
+    if !hasmapto('<Plug>DWM#Focus')
+        nmap <C-@> <Plug>DWM#Focus
+        nmap <C-Space> <Plug>DWM#Focus
+    endif
 
-  if !hasmapto('<Plug>DWMGrowMaster')
-      nmap <C-L> <Plug>DWMGrowMaster
-  endif
-  if !hasmapto('<Plug>DWMShrinkMaster')
-      nmap <C-H> <Plug>DWMShrinkMaster
-  endif
+    if !hasmapto('<Plug>DWM#GrowMaster')
+        nmap <C-L> <Plug>DWM#GrowMaster
+    endif
+    if !hasmapto('<Plug>DWM#ShrinkMaster')
+        nmap <C-H> <Plug>DWM#ShrinkMaster
+    endif
 endif
 
+function! DWM#Init()
+    augroup dwm
+        autocmd!
+        autocmd BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM#FixWindowLayout() | endif
+    augroup end
+endfunction
+
 if has('autocmd')
-  augroup dwm
-    au!
-    if v:this_session != ''
-        au SessionLoadPost
-            \ au BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM_AutoEnter() | endif
-    else
-        au BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call DWM_AutoEnter() | endif
-    endif
-  augroup end
+    autocmd VimEnter * call DWM#Init()
 endif

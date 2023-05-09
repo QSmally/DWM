@@ -23,13 +23,13 @@ inspired by dwm (Dynamic Window Manager) tiled layout management.
 Windows are always organised defined by the following layout consisting of a
 master pane on the left and a stacked pane on the right side:
 
-    +---------------------------------+
+    +--------------+------------------+
     |              |        S1        |
-    |              |------------------|
+    |              | ---------------- |
     |      M       |        S2        |
-    |              |------------------|
+    |              | ---------------- |
     |              |        S3        |
-    +---------------------------------+
+    +--------------+------------------+
 
 |:DWM_New| creates a new window in the master pane that is associated with a
 new empty buffer. The previous master window is pushed on top of the stacked
@@ -37,13 +37,9 @@ pane. |:DWM_Closes| closes any window as long as no unsaved changes are
 pending and updates the layout. An active, stacked window is focused and moved
 to the master pane with |:DWM_Focus|.
 
-Official releases can be found on vim.org:
+Development happens on GitHub:
 
-    http://www.vim.org/scripts/script.php?script_id=4186
-
-Development happens on GitHub.com:
-
-    https://github.com/spolu/dwm.vim
+    https://github.com/QSmally/DWM
 
 
 ==============================================================================
@@ -105,18 +101,18 @@ will be set to a relative percentage of the editor's width.
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
-0.1.2
-    - use of `hasmapto`
-0.1.1
-    - Huge refactoring to use only window motions
-    - Added Grow/Shrink master pane
+< 0.2.0
+    - previously maintained version
 
 ==============================================================================
 CREDITS                                                          *dwm-credits*
 
-Maintained by
+Maintained fork by
 
     Joey Smalen (QSmally, Smally)
+
+Maintained previously by
+
     Stanislas Polu (spolu)
 
 Contributors in alphabetical order

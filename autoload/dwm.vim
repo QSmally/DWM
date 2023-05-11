@@ -122,8 +122,8 @@ endfunction
 " panes in regards to the offset from the master pane.
 "
 function! dwm#resize_master(offset)
-    let s:master_offset = -a:offset * ((winnr() == 1) * -1)
-    exec 'vertical resize ' . s:master_offset
+    let s:master_offset = a:offset * ((winnr() == 1) ? 1 : -1)
+    exec 'vertical resize ' . (s:master_offset > 0 ? '+' : '') . s:master_offset
 
     if exists('g:dwm_master_pane_width') && g:dwm_master_pane_width
         let g:dwm_master_pane_width += s:master_offset

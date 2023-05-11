@@ -1,5 +1,6 @@
-*dwm.txt*   Tiling window manager for Vim
-*dwm*
+
+
+*dwm*   Tiling window manager for Vim
 
 
 ==============================================================================
@@ -17,11 +18,12 @@ CONTENTS                                                        *dwm-contents*
 ==============================================================================
 INTRO                                                              *dwm-intro*
 
-dwm.vim adds tiled window management capabilities to Vim. It is highly
-inspired by dwm (Dynamic Window Manager) tiled layout management.
+DWM adds tiled window management to Vim. It is highly inpired by the Dynamic
+Window Manager tiled layout.
 
-Windows are always organised defined by the following layout consisting of a
-master pane on the left and a stacked pane on the right side:
+Windows are always organised defined by the following layout, consisting of a
+master pane on the left and a stacked pane on the right side. QuickFix and
+floating windows are ignored by the layout.
 
     +--------------+------------------+
     |              |        S1        |
@@ -31,13 +33,7 @@ master pane on the left and a stacked pane on the right side:
     |              |        S3        |
     +--------------+------------------+
 
-|:DWM_New| creates a new window in the master pane that is associated with a
-new empty buffer. The previous master window is pushed on top of the stacked
-pane. |:DWM_Closes| closes any window as long as no unsaved changes are
-pending and updates the layout. An active, stacked window is focused and moved
-to the master pane with |:DWM_Focus|.
-
-Development happens on GitHub:
+GitHub archive:
 
     https://github.com/QSmally/DWM
 
@@ -45,34 +41,37 @@ Development happens on GitHub:
 ==============================================================================
 COMMANDS                                                        *dwm-commands*
 
-:DWM_New                                                            *:DWM_New*
+Management                                               *:New* *:Close* *:Switch*
+    Management commands which creates a new window with an empty buffer in the
+    master pane, closes the focussed window or switches the current window to
+    the master pane viewport.
 
-Creates a new window with an empty buffer in the master pane.
+Rotation                                                           *:WRR* *:WRL*
+    Performs a clockwise or counter clockwise rotate operation on all the
+    windows, including the master pane, for Window Rotate Right or Window
+    Rotate Left.
 
-
-:DWM_Close                                                        *:DWM_Close*
-
-Closes the active window if no unsaved changes are pending.
-
-
-:DWM_Focus                                                        *:DWM_Focus*
-
-Focus the active window by placing it in the master pane.
+Barrier                                                            *:WBR* *:WBL*
+    Moving the center barrier between the master and stack panes either with
+    Window Barrier Right or Window Barrier Left.
 
 
 ==============================================================================
 MAPPINGS                                                        *dwm-mappings*
 
-When |'g:dwm_map_keys'| is not defined or set to 1 the following keys are
-mapped:
+When |'g:dwm_map_keys'| is not defined or set to 1, the following keys are
+mapped to the commands in |dwm-commands| if they haven't been overwritten by a
+map yet:
 
-  <c-n>     |:DWM_New|
-  <c-c>     |:DWM_Close|
-  <c-space> |:DWM_Focus|
-  <c-j>     Move cursor clockwise to the next window
-  <c-k>     Move cursor counter-clockwise to the previous window
-  <c-h>     Grow Master Pane Width
-  <c-l>     Shrink Master Pane Width
+  <C-N>     |:New|      new window as empty buffer viewport
+  <C-C>     |:Close|    close current window
+  <C-Space> |:Switch|   switch current window to master pane
+            |:WRR|      rotate windows right
+            |:WRL|      rotate windows left
+  <C-L>     |:WBR|      move barrier right
+  <C-H>     |:WBL|      move barrier left
+  <C-J>               change cursor to next window
+  <C-K>               change cursor to previous window
 
 
 ==============================================================================
@@ -80,7 +79,7 @@ OPTIONS                                                          *dwm-options*
 
                                                             *'g:dwm_map_keys'*
 Default: 1
-If enabled, dwm maps control keys to the commands.
+If enabled, DWM maps default keys to the commands.
 >
     let g:dwm_map_keys=0
 <
@@ -88,26 +87,30 @@ If enabled, dwm maps control keys to the commands.
                                                    *'g:dwm_master_pane_width'*
 Default: ?
 Set the width of the master pane. If the value is given as a string, the width
-will be set to a relative percentage of the editor's width.
+will be set to a relative percentage of the editor's width, otherwise the
+absolute column value.
 >
-    "set master pane width to 85 columns
-    let g:dwm_master_pane_width=85
+    " Example: set master pane width to 85 columns
+    let g:dwm_master_pane_width = 85
     
-    "set master pane width to 66% of editor width
-    let g:dwm_master_pane_width="66%"
+    " Example: set master pane width to 60% of editor width
+    let g:dwm_master_pane_width = "60%"
 <
 
 
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.0
+    - breaking changes for the internal Plug API
 < 0.2.0
     - previously maintained version
+
 
 ==============================================================================
 CREDITS                                                          *dwm-credits*
 
-Maintained fork by
+Maintained by
 
     Joey Smalen (QSmally, Smally)
 
@@ -128,5 +131,7 @@ Contributors in alphabetical order
 
 ==============================================================================
 6. License                                                       *dwm-license*
+
+See Vim license.
 
 

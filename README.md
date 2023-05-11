@@ -19,19 +19,21 @@ Layouts are always organised as follows:
 ===================================
 ```
 
-* `C-N` - creates a new empty window and places it in the master pane [M] and stacks all previous windows in the stacked pane [S],
-* `C-C` - closes the current window if there are no unsaved changes,
-* `C-J` - jumps to next window (clockwise),
-* `C-K` - jumps to previous window (counter-clockwise),
-* `C-H` - contracts the master pane [M] area,
-* `C-L` - expands the master pane [M] area,
-* `C-Space` - focusses the current window, that is, place it in the master pane [M] and stacks all other windows in the stacked pane [S].
+- `<C-N>` `:New` - spawn a new empty window in the master pane,
+- `<C-C` `:Close` - close the current window, and if it was the master pane, fixes layout
+- `<C-Space>` `:Switch` - switch current window to master pane, or switch with top of stack,
+- `:WRR` - rotate windows to the right,
+- `:WRL` - rotate windows to the left,
+- `<C-L>` `:WBR` - move barrier to the right,
+- `<C-H>` `:WBL` - move barrier to the left,
+- `<C-J>` - change cursor position to the next window,
+- `<C-K>` - change cursor position to the previous window.
 
 **Todo** for the fork of DWM:
 
 * 80 column width for floating windows (help, fugitive, etc),
 * `[window]C-Space` to focus a window which is on the stacked pane [S],
-* `:DWM` command to toggle functionality (and save it to a session),
+* `:DWM` command to toggle functionality (and save it to a session).
 
 ![](http://i.imgur.com/TKL4i.png)
 

@@ -72,7 +72,11 @@ endfunction
 " whenever a new window was added.
 "
 function! dwm#layout()
-    if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix'
+    if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix' || win_gettype(0) == 'popup'
+        return
+    endif
+
+    if winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
         return
     endif
 

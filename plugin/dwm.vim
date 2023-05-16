@@ -61,11 +61,12 @@ command! WBR call dwm#resize_master(1)
 command! WBL call dwm#resize_master(-1)
 
 " Mark: defaults
-if !exists('g:dwm_map_keys')
-    let g:dwm_map_keys = 1
-endif
+if !exists('g:dwm_default_keys')    | let g:dwm_default_keys = 1    | endif
+if !exists('g:dwm_default_enabled') | let g:dwm_default_enabled = 1 | endif
+if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80     | endif
+if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12    | endif
 
-if g:dwm_map_keys
+if g:dwm_default_keys
     nnoremap <C-J> <C-W>w
     nnoremap <C-K> <C-W>W
     if !hasmapto('<Plug>(dwm_new_window)')    | nmap <C-N> <Plug>(dwm_new_window)    | endif

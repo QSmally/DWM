@@ -6,19 +6,19 @@
 ==============================================================================
 CONTENTS                                                        *dwm-contents*
 
-    1.Intro...................................|dwm-intro|
-    2.Commands................................|dwm-commands|
-    3.Mappings................................|dwm-mappings|
-    4.Options.................................|dwm-options|
-    5.Changelog...............................|dwm-changelog|
-    6.Credits.................................|dwm-credits|
-    7.License.................................|dwm-license|
+    1. Intro...................................|dwm-intro|
+    2. Commands................................|dwm-commands|
+    3. Mappings................................|dwm-mappings|
+    4. Options.................................|dwm-options|
+    5. Changelog...............................|dwm-changelog|
+    6. Credits.................................|dwm-credits|
+    7. License.................................|dwm-license|
 
 
 ==============================================================================
 INTRO                                                              *dwm-intro*
 
-DWM adds tiled window management to Vim. It is highly inpired by the Dynamic
+DWM adds tiled window management to Vim. It is highly inspired by the Dynamic
 Window Manager tiled layout.
 
 Windows are always organised defined by the following layout, consisting of a
@@ -59,7 +59,7 @@ Barrier                                                            *:WBR* *:WBL*
 ==============================================================================
 MAPPINGS                                                        *dwm-mappings*
 
-When |'g:dwm_map_keys'| is not defined or set to 1, the following keys are
+When |'g:dwm_default_keys'| is not defined or set to 1, the following keys are
 mapped to the commands in |dwm-commands| if they haven't been overwritten by a
 map yet:
 
@@ -77,11 +77,11 @@ map yet:
 ==============================================================================
 OPTIONS                                                          *dwm-options*
 
-                                                            *'g:dwm_map_keys'*
+                                                        *'g:dwm_default_keys'*
 Default: 1
 If enabled, DWM maps default keys to the commands.
 >
-    let g:dwm_map_keys=0
+    let g:dwm_default_keys = 0
 <
 
                                                    *'g:dwm_master_pane_width'*
@@ -95,6 +95,18 @@ absolute column value.
     
     " Example: set master pane width to 60% of editor width
     let g:dwm_master_pane_width = "60%"
+<
+
+                                      *'g:dwm_skip_width'* *'g:dwm_skip_height'*
+Default: 80, 12
+A column and row value to skip automatically resizing the layout when a
+viewport entered with either of those dimensions.
+>
+    " Example: set width to skip to 100 columns
+    let g:dwm_skip_width = 100
+
+    " Example: set height to skip to 16 rows
+    let g:dwm_skip_width = 16
 <
 
 

@@ -72,16 +72,16 @@ endfunction
 " whenever a new window was added.
 "
 function! dwm#layout()
-  if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix'
-    return
-  endif
+    if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix'
+        return
+    endif
 
-  " Mark: move new window to stack top
-  wincmd K
+    " Mark: move new window to stack top
+    wincmd K
 
-  " Mark: refocus new window
-  call dwm#focus_window()
-  call dwm#focus_window()
+    " Mark: refocus new window
+    call dwm#focus_window()
+    call dwm#focus_window()
 endfunction
 
 "

@@ -37,6 +37,10 @@ GitHub archive:
 
     https://github.com/QSmally/DWM
 
+Currently, DWM doesn't necessarily support fixed-width windows (such as
+VimFiler-explorer, minimaps, etc). DWM will be automatically disabled with low
+width sessions like dual-screen preview/editor setups.
+
 
 ==============================================================================
 COMMANDS                                                        *dwm-commands*
@@ -84,6 +88,13 @@ If enabled, DWM maps default keys to the commands.
     let g:dwm_default_keys = 0
 <
 
+                                                        *'g:dwm_enable_width'*
+Default: 162
+Total column width in order to enable automatic relayout management.
+>
+    let g:dwm_enable_width = 170
+<
+
                                                    *'g:dwm_master_pane_width'*
 Default: ?
 Set the width of the master pane. If the value is given as a string, the width
@@ -98,21 +109,25 @@ absolute column value.
 <
 
                                       *'g:dwm_skip_width'* *'g:dwm_skip_height'*
-Default: 80, 12
+Default: 40, 6
 A column and row value to skip automatically resizing the layout when a
 viewport entered with either of those dimensions.
 >
     " Example: set width to skip to 100 columns
-    let g:dwm_skip_width = 100
+    let g:dwm_skip_width = 50
 
     " Example: set height to skip to 16 rows
-    let g:dwm_skip_width = 16
+    let g:dwm_skip_width = 8
 <
 
 
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.1
+    - support for 'vim -o files...' (not yet vertical 'vim -O files...')
+    - minimum total columns for DMW to enable (|g:dwm_enable_width|)
+    - guard for closing last window
 = 0.2.0
     - breaking changes for the internal Plug API
 < 0.2.0

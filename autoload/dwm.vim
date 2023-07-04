@@ -1,12 +1,27 @@
 
+"
+" Automatic adjusting layout at startup-time (for 'vim -o ...') as well as
+" after loading windows from a session.
+"
 function! dwm#init()
-    if has('autocmd')
-        augroup dwm
-            autocmd!
-            autocmd VimEnter *
-                \ autocmd BufWinEnter * if &l:buflisted || &l:filetype == 'help' | call dwm#layout() | endif
-        augroup end
+    call dwm#auto_layout()
+    autocmd BufWinEnter * call dwm#auto_layout()
+endfunction
+
+function dwm#auto_layout()
+    if &columns < g:dwm_enable_width || !len(&l:filetype)
+        return
     endif
+
+    if winnr('$') == 1 || &l:buftype == 'quickfix' || win_gettype(0) == 'popup'
+        return
+    endif
+
+    if !&l:buflisted && &l:filetype != 'help'
+        return
+    endif
+
+    call dwm#layout()
 endfunction
 
 "
@@ -72,10 +87,6 @@ endfunction
 " whenever a new window was added.
 "
 function! dwm#layout()
-    if winnr('$') == 1 || !len(&l:filetype) || &l:buftype == 'quickfix' || win_gettype(0) == 'popup'
-        return
-    endif
-
     if winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
         return
     endif
@@ -94,6 +105,10 @@ endfunction
 " position of the master pane.
 "
 function! dwm#close_window()
+    if winnr('$') == 1
+        return
+    endif
+
     if winnr() == 1
         " Mark: close the master panel
         close | wincmd H | call dwm#resize_pane_width()

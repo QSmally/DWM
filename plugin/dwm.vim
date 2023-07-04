@@ -12,7 +12,7 @@
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
 " Last Changed: Monday, 8 August 2023
-"      Version: 0.2.0 (fork)
+"      Version: 0.2.1 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
 "               documentation.
@@ -28,16 +28,16 @@ let g:loaded_dwm = 1
 "
 " All layout transformations assume the layout contains one master pane on the
 " left and an arbitrary number of stacked panes on the right. The function
-" DWM#FixWindowLayout() transforms a wrongly-put window layout to the fixed
-" margins depending on their winnr's.
+" dwm#layout() transforms a wrongly-put window layout to the fixed margins
+" depending on their winnr's.
 "
-" +--------+--------+
-" |        |   S1   |
-" |        +--------+
-" |   M    |   S3   |
-" |        +--------+
-" |        |   S3   |
-" +--------+--------+
+" +--------------+------------------+
+" |              |        S1        |
+" |              | ---------------- |
+" |      M       |        S2        |
+" |              | ---------------- |
+" |              |        S3        |
+" +--------------+------------------+
 "
 
 " Mark: public API
@@ -61,10 +61,11 @@ command! WBR call dwm#resize_master(1)
 command! WBL call dwm#resize_master(-1)
 
 " Mark: defaults
-if !exists('g:dwm_default_keys')    | let g:dwm_default_keys = 1    | endif
-if !exists('g:dwm_default_enabled') | let g:dwm_default_enabled = 1 | endif
-if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80     | endif
-if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12    | endif
+if !exists('g:dwm_default_keys')    | let g:dwm_default_keys = 1      | endif
+" if !exists('g:dwm_default_enabled') | let g:dwm_default_enabled = 1   | endif
+if !exists('g:dwm_enable_width')    | let g:dwm_enable_width = 2 * 81 | endif
+if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80 / 2   | endif
+if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12 / 2  | endif
 
 if g:dwm_default_keys
     nnoremap <C-J> <C-W>w
@@ -76,4 +77,7 @@ if g:dwm_default_keys
     if !hasmapto('<Plug>(dwm_barrier_left)')  | nmap <C-H> <Plug>(dwm_barrier_left)  | endif
 endif
 
-call dwm#init()
+" Mark: init
+if has('autocmd')
+    autocmd VimEnter * call dwm#init()
+endif

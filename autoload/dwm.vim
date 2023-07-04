@@ -25,6 +25,35 @@ function dwm#auto_layout()
 endfunction
 
 "
+" For correctly rendering the QuickFix window in the layout, DWM closes and
+" reopens the viewport when it's found before adjusting the layout. Its goal
+" is to always render QuickFix in its default position on screen.
+"
+" +--------------+------------------+
+" |              |        S1        |
+" |              | ---------------- |
+" |      M       |        S2        |
+" |              | ---------------- |
+" |              |        S3        |
+" + ------------------------------- +
+" |             q-f                 |
+" +--------------+------------------+
+"
+function! dwm#is_qf_open()
+    for winnr in range(1, winnr('$'))
+        if getwinvar(winnr, '&ft') == 'qf' | return 1 | endif
+    endfor
+    return 0
+endfunction
+
+function! dwm#fix_qf_window()
+    if dwm#is_qf_open()
+        cclose | silent copen
+        1wincmd w
+    endif
+endfunction
+
+"
 " Transitions the current master pane to either the top or bottom of the stack
 " pane. At the end, the layout should be the following with the master pane
 " being at the top or bottom.
@@ -55,9 +84,10 @@ endfunction
 " TODO: Accept filename to populate window with buffer contents
 "
 function! dwm#new_window()
-  call dwm#stack_master(1)
-  vert topleft new
-  call dwm#resize_pane_width()
+    call dwm#stack_master(1)
+    vert topleft new
+    call dwm#resize_pane_width()
+    call dwm#fix_qf_window()
 endfunction
 
 "
@@ -79,7 +109,9 @@ function! dwm#focus_window()
     call dwm#stack_master(1)
     exec l:curwin . "wincmd w"
     wincmd H
+
     call dwm#resize_pane_width()
+    call dwm#fix_qf_window()
 endfunction
 
 "
@@ -111,9 +143,10 @@ function! dwm#close_window()
 
     if winnr() == 1
         " Mark: close the master panel
-        close | wincmd H | call dwm#resize_pane_width()
+        quit | wincmd H | call dwm#resize_pane_width()
+        call dwm#fix_qf_window()
     else
-        close
+        quit
     end
 endfunction
 

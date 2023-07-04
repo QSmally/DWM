@@ -37,9 +37,10 @@ GitHub archive:
 
     https://github.com/QSmally/DWM
 
-Currently, DWM doesn't necessarily support fixed-width windows (such as
-VimFiler-explorer, minimaps, etc). DWM will be automatically disabled with low
-width sessions like dual-screen preview/editor setups.
+Currently, DWM supports low-width sessions (such as dual-screen preview/editor
+setups) and ignores the QuickFix window. In the future, DWM will render around
+fixed-width windows such as those provided by VimFiler, Minimap and Visual
+Split.
 
 
 ==============================================================================
@@ -124,6 +125,9 @@ viewport entered with either of those dimensions.
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.2
+    - layout fixes for QuickFix windows
+    - use 'quit' instead of 'close' for :Close, for andrewradev/undoquit.vim
 = 0.2.1
     - support for 'vim -o files...' (not yet vertical 'vim -O files...')
     - minimum total columns for DMW to enable (|g:dwm_enable_width|)

@@ -2,12 +2,8 @@
 # Tiling window manager for Vim
 
 `dwm.vim` adds tiled window management to Vim. It is highly inspired by [dwm](http://dwm.suckless.org/)
-(Dynamic Window Manager) tiled layout management.
-
-Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
-contributions.
-
-Layouts are always organised as follows:
+(Dynamic Window Manager) tiled layout management. Windows are always organised defined by the
+following layout, consisting of a master pane on the left and a stacked pane on the right side.
 
 ```
 ===================================
@@ -19,8 +15,13 @@ Layouts are always organised as follows:
 ===================================
 ```
 
+Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
+contributions.
+
+### Commands and bindings
+
 - `<C-N>` `:New` - spawn a new empty window in the master pane,
-- `<C-C` `:Close` - close the current window, and if it was the master pane, fixes layout
+- `<C-C>` `:Close` - close the current window, and if it was the master pane, fixes layout
 - `<C-Space>` `:Switch` - switch current window to master pane, or switch with top of stack,
 - `:WRR` - rotate windows to the right,
 - `:WRL` - rotate windows to the left,
@@ -29,63 +30,58 @@ Layouts are always organised as follows:
 - `<C-J>` - change cursor position to the next window,
 - `<C-K>` - change cursor position to the previous window.
 
-**Todo** for the fork of DWM:
+### Upcoming changes and todo
 
-* 80 column width for floating windows (help, fugitive, etc),
-* `[window]C-Space` to focus a window which is on the stacked pane [S],
-* `:DWM` command to toggle functionality (and save it to a session).
+* Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
+* In low-width sessions, automatically do inline resizing of currently-focussed window,
+* Automatically fix layout when resizing the terminal window,
+* `[window]C-Space` to focus a specific window which is on the stacked pane,
+* `:DWM` (and `:DWM!`) command to toggle functionality through a session.
+
+### Preview of the tiled layout
 
 ![](http://i.imgur.com/TKL4i.png)
 
-### Installation
+## Installation
 
-Install to `~/.vim/plugin/dwm.vim` or use Vim-Plug, `Plug 'QSmally/DWM'`.
+Install to `~/.vim/plugin/dwm.vim` and `~/.vim/autoload/dwm.vim`, or use Vim-Plug,
+`Plug 'QSmally/DWM'`.
 
 ```
-mkdir -p ~/.vim/plugin ~/.vim/doc; \
-wget -qO ~/.vim/plugin/dwm.vim \
-    https://raw.github.com/spolu/dwm.vim/master/plugin/dwm.vim; \
-wget -qO ~/.vim/doc/dwm.txt \
-    https://raw.github.com/spolu/dwm.vim/master/doc/dwm.txt;
+mkdir -p ~/.vim/plugin ~/.vim/doc ~/.vim/autoload; \
+wget -qO ~/.vim/plugin/dwm.vim https://raw.github.com/QSmally/DWM/master/plugin/dwm.vim; \
+wget -qO ~/.vim/autoload/dwm.vim https://raw.github.com/QSmally/DWM/master/autoload/dwm.vim; \
+wget -qO ~/.vim/doc/dwm.txt https://raw.github.com/QSmally/DWM/master/doc/dwm.txt
 ```
 
 You can use `curl -so` if you prefer it over `wget`.
 
-### Optional Settings
+## Configuration
 
-- `g:dwm_map_keys`: if set to a falsey value, prevents key mapping.
+- `g:dwm_default_keys`: if set to a falsey value, prevents key mapping.
 - `g:dwm_master_pane_width`: set the width of the master pane (e.g. `g:dwm_master_pane_width=85`)
 
+<!-- TODO: Expand doc to README -->
+
 To use a mouse to select windows and resize panes:
-- `set mouse=a`: enable the use of the mouse in all modes
-- `set ttymouse=xterm2`: recognize mouse codes for the xterm2 terminal type
 
-### Remarks
+- `set mouse=a`: enable the use of the mouse in all modes,
+- `set ttymouse=xterm2`: recognise mouse codes for the xterm2 terminal type.
 
-There is only one tiled layout available right now, but do not hesitate to *fork it*!
+## Remarks
+
+There is only one tiled layout available right now, but do not hesitate to *fork it!*
 
 For fun, I urge you to try using `dwm.vim` in `vim`, in `tmux`, in `ssh`, in `tmux`, in `xterm`, in `dwm`.
 
-Thanks Uriel (✝) (*luriel* on HackerNews) for this awesome comment on the [HN post](http://news.ycombinator.com/item?id=4419530) 
+Thanks Uriel (*luriel* on HackerNews) for this awesome comment on the [HN post](http://news.ycombinator.com/item?id=4419530) 
 related to `dwm.vim`:
 
 > As one of the original instigators of dwm and wmii before that (mostly by shouting at garbeam) 
 > I want to point out that this kind of tiled window management was first introduced in larswm 
 > (that is sadly discontinued), which in turn was heavily inspired by Rob Pike's Acme editing 
 > environment ( http://acme.cat-v.org ). 
+>
 > So in a way we have gone full circle, from text editor, to window managers, back to text editor.
+>
 > That said, I still prefer Acme to vim, but would be really cool if somebody added mouse chording to vim :)
-
-### Contributors
-
-```
-@dsapala (Dan Sapala)
-@rhacker
-@matze (Matthias Vogelgesang)
-@mitnk
-@tony (Tony Narlock)
-@lmarburger (Larry Marburger)
-@afriggeri (Adrien)
-@n4kz (Alexander Nazarov)
-```
-

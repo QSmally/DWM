@@ -28,7 +28,7 @@ floating windows are ignored by the layout.
     +--------------+------------------+
     |              |        S1        |
     |              | ---------------- |
-    |      M       |        S2        |
+    |      M0      |        S2        |
     |              | ---------------- |
     |              |        S3        |
     +--------------+------------------+
@@ -129,6 +129,7 @@ CHANGELOG                                                      *dwm-changelog*
 
 = 0.2.3
     - modifiers to close and focus bindings
+    - add C-M binding to return to master pane from any stacked viewport
 = 0.2.2
     - layout fixes for QuickFix windows
     - use 'quit' instead of 'close' for :Close, for andrewradev/undoquit.vim
@@ -165,8 +166,8 @@ Contributors in alphabetical order
 
 
 ==============================================================================
-6. License                                                       *dwm-license*
+LICENSE                                                          *dwm-license*
 
-See Vim license.
+See Vim license with :h |license|.
 
 

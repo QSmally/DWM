@@ -34,7 +34,7 @@ let g:loaded_dwm = 1
 " +--------------+------------------+
 " |              |        S1        |
 " |              | ---------------- |
-" |      M       |        S2        |
+" |      M0      |        S2        |
 " |              | ---------------- |
 " |              |        S3        |
 " +--------------+------------------+
@@ -68,8 +68,9 @@ if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80 / 2   | endif
 if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12 / 2  | endif
 
 if g:dwm_default_keys
-    nnoremap <C-J> <C-W>w
-    nnoremap <C-K> <C-W>W
+    nnoremap <silent> <C-J> :wincmd w<CR>
+    nnoremap <silent> <C-K> :wincmd W<CR>
+    nnoremap <silent> <C-M> :1wincmd w<CR>
     if !hasmapto('<Plug>(dwm_new_window)')    | nmap <C-N> <Plug>(dwm_new_window)    | endif
     if !hasmapto('<Plug>(dwm_close_window)')  | nmap <C-C> <Plug>(dwm_close_window)  | endif
     if !hasmapto('<Plug>(dwm_focus_window)')  | nmap <C-@> <Plug>(dwm_focus_window)  | endif

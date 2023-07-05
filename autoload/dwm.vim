@@ -32,12 +32,12 @@ endfunction
 " +--------------+------------------+
 " |              |        S1        |
 " |              | ---------------- |
-" |      M       |        S2        |
+" |      M0      |        S2        |
 " |              | ---------------- |
 " |              |        S3        |
-" + ------------------------------- +
-" |             q-f                 |
 " +--------------+------------------+
+" |      qf                         |
+" +---------------------------------+
 "
 function! dwm#is_qf_open()
     for winnr in range(1, winnr('$'))
@@ -58,15 +58,15 @@ endfunction
 " pane. At the end, the layout should be the following with the master pane
 " being at the top or bottom.
 "
-" +-----------------+
-" |        M        |
-" +-----------------+
-" |        S1       |
-" +-----------------+
-" |        S2       |
-" +-----------------+
-" |        S3       |
-" +-----------------+
+" +----------------+
+" |       M0       |
+" +----------------+
+" |       S1       |
+" +----------------+
+" |       S2       |
+" +----------------+
+" |       S3       |
+" +----------------+
 "
 function! dwm#stack_master(to_top)
     1wincmd w
@@ -92,12 +92,12 @@ endfunction
 
 "
 " Move the current window to the master pane (assuming that the previous master
-" window is added to the top of the stack from DWM#StackMaster()). If current
+" window is added to the top of the stack from dwm#stack_master()). If current
 " window is master already, the stack top is elected to be swapped with the
 " master pane.
 "
-function! dwm#focus_window()
-    if winnr('$') == 1
+function! dwm#focus_window(win)
+    if winnr('$') == 1 || winnr('$') <= a:win
         return
     endif
 
@@ -105,7 +105,7 @@ function! dwm#focus_window()
         wincmd w
     endif
 
-    let l:curwin = winnr()
+    let l:curwin = a:win == 0 ? winnr() : a:win + 1
     call dwm#stack_master(1)
     exec l:curwin . "wincmd w"
     wincmd H
@@ -127,8 +127,8 @@ function! dwm#layout()
     wincmd K
 
     " Mark: refocus new window
-    call dwm#focus_window()
-    call dwm#focus_window()
+    call dwm#focus_window(0)
+    call dwm#focus_window(0)
 endfunction
 
 "
@@ -136,18 +136,24 @@ endfunction
 " redraws the layout. In that case, the top of the stack pane will take the
 " position of the master pane.
 "
-function! dwm#close_window()
-    if winnr('$') == 1
+function! dwm#close_window(win)
+    if winnr('$') == 1 || winnr('$') <= a:win
         return
     endif
 
-    if winnr() == 1
-        " Mark: close the master panel
+    " Mark: close the master panel
+    if a:win == 0 && winnr() == 1
         quit | wincmd H | call dwm#resize_pane_width()
         call dwm#fix_qf_window()
-    else
-        quit
-    end
+        return
+    endif
+
+    let l:curwin = winnr()
+    let l:tarwin = a:win == 0 ? winnr() : a:win + 1
+    exec l:tarwin . 'wincmd w' | quit
+
+    let l:fix = l:curwin < l:tarwin ? 0 : -1
+    exec l:curwin + l:fix . 'wincmd w'
 endfunction
 
 "

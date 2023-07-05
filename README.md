@@ -5,15 +5,17 @@
 (Dynamic Window Manager) tiled layout management. Windows are always organised defined by the
 following layout, consisting of a master pane on the left and a stacked pane on the right side.
 
-```
-===================================
-|              |        S1        | 
-|              |==================|
-|      M       |        S2        | 
-|              |==================|
-|              |        S3        | 
-===================================
-```
+<pre align="center"><code>
++--------------+------------------+   +--------------+------------------+
+|              |        S1        |   |              |        S1        |
+|              | ---------------- |   |              | ---------------- |
+|      M0      |        S2        |   |      M0      |        S2        |
+|              | ---------------- |   |              | ---------------- |
+|              |        S3        |   |              |        S3        |
++--------------+------------------+   +--------------+------------------+
+                                      |      qf                         |
+                                      +---------------------------------+
+</code></pre>
 
 Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
 contributions.

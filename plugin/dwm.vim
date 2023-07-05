@@ -19,7 +19,7 @@
 "      History: See supplied documentation.
 "==============================================================================
 
-if exists("g:loaded_dwm") || &diff || &cp || v:version < 700
+if exists('g:loaded_dwm') || &diff || &cp || v:version < 700
     finish
 endif
 

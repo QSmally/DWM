@@ -6,18 +6,19 @@
 function! dwm#init()
     call dwm#auto_layout()
     autocmd BufWinEnter * call dwm#auto_layout()
+    autocmd VimResized * call dwm#layout()
 endfunction
 
 function dwm#auto_layout()
-    if &columns < g:dwm_enable_width || !len(&l:filetype)
-        return
-    endif
-
     if winnr('$') == 1 || &l:buftype == 'quickfix' || win_gettype(0) == 'popup'
         return
     endif
 
-    if !&l:buflisted && &l:filetype != 'help'
+    if !&l:buflisted && &l:filetype != 'help' && !len(&l:filetype)
+        return
+    endif
+
+    if &columns < g:dwm_enable_width
         return
     endif
 
@@ -85,9 +86,9 @@ endfunction
 "
 function! dwm#new_window()
     call dwm#stack_master(1)
-    vert topleft new
-    call dwm#resize_pane_width()
-    call dwm#fix_qf_window()
+    topleft new
+    call dwm#focus_window(0)
+    call dwm#focus_window(0)
 endfunction
 
 "
@@ -107,8 +108,8 @@ function! dwm#focus_window(win)
 
     let l:curwin = a:win == 0 ? winnr() : a:win + 1
     call dwm#stack_master(1)
-    exec l:curwin . "wincmd w"
-    wincmd H
+    exec l:curwin . 'wincmd w'
+    exec 'wincmd ' . (&columns >= g:dwm_enable_width ? 'H' : 'K')
 
     call dwm#resize_pane_width()
     call dwm#fix_qf_window()
@@ -143,8 +144,9 @@ function! dwm#close_window(win)
 
     " Mark: close the master panel
     if a:win == 0 && winnr() == 1
-        quit | wincmd H | call dwm#resize_pane_width()
-        call dwm#fix_qf_window()
+        quit
+        call dwm#focus_window(0)
+        call dwm#focus_window(0)
         return
     endif
 
@@ -167,7 +169,7 @@ function! dwm#resize_pane_width()
 
     " Mark: resize the master pane if the user defined it
     if exists('g:dwm_master_pane_width')
-        if type(g:dwm_master_pane_width) == type("")
+        if type(g:dwm_master_pane_width) == type('')
             exec 'vertical resize ' . ((str2nr(g:dwm_master_pane_width) * &columns) / 100)
         else
             exec 'vertical resize ' . g:dwm_master_pane_width
@@ -203,6 +205,6 @@ function! dwm#rotate(clockwise)
         wincmd w
     endif
 
-    wincmd H
+    exec 'wincmd ' . (&columns >= g:dwm_enable_width ? 'H' : 'K')
     call dwm#resize_pane_width()
 endfunction

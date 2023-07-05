@@ -36,12 +36,16 @@ contributions.
 
 * Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
 * In low-width sessions, automatically do inline resizing of currently-focussed window,
-* Automatically fix layout when resizing the terminal window,
 * `:DWM` (and `:DWM!`) command to toggle functionality through a session.
 
 ### Preview of the tiled layout
 
+<!-- Old one to display no qf window -->
 ![](http://i.imgur.com/TKL4i.png)
+<!-- If a new one is wanted -->
+<!-- ![](http://i.imgur.com/yXCntB2.png) -->
+
+![](http://i.imgur.com/GsjB1od.png)
 
 ## Installation
 

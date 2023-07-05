@@ -6,7 +6,7 @@
 ==============================================================================
 CONTENTS                                                        *dwm-contents*
 
-    1. Intro...................................|dwm-intro|
+    1. Introduction............................|dwm-introduction|
     2. Commands................................|dwm-commands|
     3. Mappings................................|dwm-mappings|
     4. Options.................................|dwm-options|
@@ -16,7 +16,7 @@ CONTENTS                                                        *dwm-contents*
 
 
 ==============================================================================
-INTRO                                                              *dwm-intro*
+INTRODUCTION                                                *dwm-introduction*
 
 DWM adds tiled window management to Vim. It is highly inspired by the Dynamic
 Window Manager tiled layout.
@@ -37,10 +37,10 @@ GitHub archive:
 
     https://github.com/QSmally/DWM
 
-Currently, DWM supports low-width sessions (such as dual-screen preview/editor
-setups) and ignores the QuickFix window. In the future, DWM will render around
-fixed-width windows such as those provided by VimFiler, Minimap and Visual
-Split.
+Currently, DWM supports a one-column mode when Vim's width is low (such as dual-
+screen preview/editor setups) and ignores the QuickFix window in its panes. In
+the future, DWM will render around fixed-width windows such as those provided by
+VimFiler, Minimap and Visual Split.
 
 
 ==============================================================================
@@ -80,6 +80,15 @@ map yet:
 
 *[w]* is the stacked pane viewport number starting at 1. See the visual layout.
 
+To customise the mapping, you can override the Plug bindings:
+>
+    nnoremap <C-N> <Plug>(dwm_new_window)
+    nnoremap <C-C> <Plug>(dwm_close_window)
+    nnoremap <C-@> <Plug>(dwm_focus_window)
+    nnoremap <C-L> <Plug>(dwm_barrier_right)
+    nnoremap <C-H> <Plug>(dwm_barrier_left)
+<
+
 
 ==============================================================================
 OPTIONS                                                          *dwm-options*
@@ -108,7 +117,7 @@ absolute column value.
     let g:dwm_master_pane_width = 85
     
     " Example: set master pane width to 60% of editor width
-    let g:dwm_master_pane_width = "60%"
+    let g:dwm_master_pane_width = '60%'
 <
 
                                       *'g:dwm_skip_width'* *'g:dwm_skip_height'*
@@ -130,8 +139,9 @@ CHANGELOG                                                      *dwm-changelog*
 = 0.2.3
     - modifiers to close and focus bindings
     - add C-M binding to return to master pane from any stacked viewport
+    - fix creating two-column layout when in single-column mode
 = 0.2.2
-    - layout fixes for QuickFix windows
+    - fix layout for QuickFix windows
     - use 'quit' instead of 'close' for :Close, for andrewradev/undoquit.vim
 = 0.2.1
     - support for 'vim -o files...' (not yet vertical 'vim -O files...')

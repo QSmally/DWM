@@ -68,15 +68,17 @@ When |'g:dwm_default_keys'| is not defined or set to 1, the following keys are
 mapped to the commands in |dwm-commands| if they haven't been overwritten by a
 map yet:
 
-  <C-N>     |:New|      new window as empty buffer viewport
-  <C-C>     |:Close|    close current window
-  <C-Space> |:Switch|   switch current window to master pane
-            |:WRR|      rotate windows right
-            |:WRL|      rotate windows left
-  <C-L>     |:WBR|      move barrier right
-  <C-H>     |:WBL|      move barrier left
-  <C-J>               change cursor to next window
-  <C-K>               change cursor to previous window
+  <C-N>     |:New|        new master pane window as empty buffer viewport
+  [w]<C-C>  |:[w]Close|   close |[w]| or current window
+  [w]<C-@>  |:[w]Switch|  focus |[w]|, current or first window on master pane
+            |:WRR|        rotate window layout right
+            |:WRL|        rotate window layout left
+  <C-L>     |:WBR|        move center barrier right
+  <C-H>     |:WBL|        move center barrier left
+  <C-J>                 change cursor position to next window
+  <C-K>                 change cursor position to previous window
+
+*[w]* is the stacked pane viewport number starting at 1. See the visual layout.
 
 
 ==============================================================================
@@ -125,6 +127,8 @@ viewport entered with either of those dimensions.
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.3
+    - modifiers to close and focus bindings
 = 0.2.2
     - layout fixes for QuickFix windows
     - use 'quit' instead of 'close' for :Close, for andrewradev/undoquit.vim

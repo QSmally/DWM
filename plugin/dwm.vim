@@ -12,7 +12,7 @@
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
 " Last Changed: Monday, 5 July 2023
-"      Version: 0.2.2 (fork)
+"      Version: 0.2.3 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
 "               documentation.
@@ -55,8 +55,8 @@ nnoremap <silent> <Plug>(dwm_barrier_left) :WBL<CR>
 command! WRR call dwm#rotate(1)
 command! WRL call dwm#rotate(0)
 command! New call dwm#new_window()
-command! Close call dwm#close_window()
-command! Switch call dwm#focus_window()
+command! -count=0 Close call dwm#close_window(v:count == 0 ? <count> : v:count)
+command! -count=0 Switch call dwm#focus_window(v:count == 0 ? <count> : v:count)
 command! WBR call dwm#resize_master(1)
 command! WBL call dwm#resize_master(-1)
 

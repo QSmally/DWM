@@ -21,21 +21,20 @@ contributions.
 ### Commands and bindings
 
 - `<C-N>` `:New` - spawn a new empty window in the master pane,
-- `<C-C>` `:Close` - close the current window, and if it was the master pane, fixes layout
-- `<C-Space>` `:Switch` - switch current window to master pane, or switch with top of stack,
-- `:WRR` - rotate windows to the right,
-- `:WRL` - rotate windows to the left,
-- `<C-L>` `:WBR` - move barrier to the right,
-- `<C-H>` `:WBL` - move barrier to the left,
-- `<C-J>` - change cursor position to the next window,
-- `<C-K>` - change cursor position to the previous window.
+- `[w]<C-C>` `:[w]Close` - close `[w]` or current window and adjusts layout,
+- `[w]<C-@>` `:[w]Switch` - focus `[w]`, current or first window on the master pane,
+- `:WRR` - rotate window layout to the right,
+- `:WRL` - rotate window layout to the left,
+- `<C-L>` `:WBR` - move center barrier to the right,
+- `<C-H>` `:WBL` - move center barrier to the left,
+- `<C-J>` - change cursor position to next window,
+- `<C-K>` - change cursor position to previous window.
 
 ### Upcoming changes and todo
 
 * Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
 * In low-width sessions, automatically do inline resizing of currently-focussed window,
 * Automatically fix layout when resizing the terminal window,
-* `[window]C-Space` to focus a specific window which is on the stacked pane,
 * `:DWM` (and `:DWM!`) command to toggle functionality through a session.
 
 ### Preview of the tiled layout

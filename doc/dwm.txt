@@ -37,26 +37,29 @@ GitHub archive:
 
     https://github.com/QSmally/DWM
 
-Currently, DWM supports a one-column mode when Vim's width is low (such as dual-
-screen preview/editor setups) and ignores the QuickFix window in its panes. In
-the future, DWM will render around fixed-width windows such as those provided by
-VimFiler, Minimap and Visual Split.
+Currently, DWM supports a one-column mode when Vim's width is low (such as
+dual-screen preview/editor setups) and ignores the QuickFix window in its
+panes. In the future, DWM will render around fixed-width windows such as those
+provided by VimFiler, Minimap and Visual Split.
 
 
 ==============================================================================
 COMMANDS                                                        *dwm-commands*
 
-Management                                               *:New* *:Close* *:Switch*
-    Management commands which creates a new window with an empty buffer in the
-    master pane, closes the focussed window or switches the current window to
-    the master pane viewport.
+                                                         *:New* *:Close* *:Switch*
+Management~
+    Management commands which creates a new window with an empty or file-
+    populated buffer in the master or stack pane, closes the focussed window
+    or switches the current window to the master pane viewport.
 
-Rotation                                                           *:WRR* *:WRL*
+                                                                   *:WRR* *:WRL*
+Rotation~
     Performs a clockwise or counter clockwise rotate operation on all the
     windows, including the master pane, for Window Rotate Right or Window
     Rotate Left.
 
-Barrier                                                            *:WBR* *:WBL*
+                                                                   *:WBR* *:WBL*
+Barrier~
     Moving the center barrier between the master and stack panes either with
     Window Barrier Right or Window Barrier Left.
 
@@ -68,7 +71,8 @@ When |'g:dwm_default_keys'| is not defined or set to 1, the following keys are
 mapped to the commands in |dwm-commands| if they haven't been overwritten by a
 map yet:
 
-  <C-N>     |:New|        new master pane window as empty buffer viewport
+  <C-N>     |:New|        new empty master pane window
+  <C-P>     |:New[!]|...  opens dmenu-like prompt for the master or stack pane
   [w]<C-C>  |:[w]Close|   close |[w]| or current window
   [w]<C-@>  |:[w]Switch|  focus |[w]|, current or first window on master pane
             |:WRR|        rotate window layout right
@@ -77,6 +81,7 @@ map yet:
   <C-H>     |:WBL|        move center barrier left
   <C-J>                 change cursor position to next window
   <C-K>                 change cursor position to previous window
+  <C-M>                 jump cursor position to first/master pane
 
 *[w]* is the stacked pane viewport number starting at 1. See the visual layout.
 
@@ -136,9 +141,11 @@ viewport entered with either of those dimensions.
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.4
+    - :New[!] with filename, stack panel and <C-P> dmenu binding
 = 0.2.3
     - modifiers to close and focus bindings
-    - add C-M binding to return to master pane from any stacked viewport
+    - add <C-M> binding to return to master pane from any stacked viewport
     - fix creating two-column layout when in single-column mode
 = 0.2.2
     - fix layout for QuickFix windows

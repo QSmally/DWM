@@ -8,13 +8,13 @@ following layout, consisting of a master pane on the left and a stacked pane on 
 <pre align="center"><code>
 +--------------+------------------+   +--------------+------------------+
 |              |        S1        |   |              |        S1        |
-|              | ---------------- |   |              | ---------------- |
-|      M0      |        S2        |   |      M0      |        S2        |
-|              | ---------------- |   |              | ---------------- |
-|              |        S3        |   |              |        S3        |
-+--------------+------------------+   +--------------+------------------+
-                                      |      qf                         |
-                                      +---------------------------------+
+|              |                  |   |              | ---------------- |
+|              | ---------------- |   |      M0      |        S2        |
+|      M0      |        S2        |   |              | ---------------- |
+|              |                  |   |              |        S3        |
+|              | ---------------- |   +--------------+------------------+
+|              |        S3        |   |      qf                         |
++--------------+------------------+   +---------------------------------+
 </code></pre>
 
 Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
@@ -23,6 +23,7 @@ contributions.
 ### Commands and bindings
 
 - `<C-N>` `:New` - spawn a new empty window in the master pane,
+- `<C-P>` - enter dmenu-like `:New[!]` to open a file in the master or stack pane,
 - `[w]<C-C>` `:[w]Close` - close `[w]` or current window and adjusts layout,
 - `[w]<C-@>` `:[w]Switch` - focus `[w]`, current or first window on the master pane,
 - `:WRR` - rotate window layout to the right,
@@ -30,7 +31,8 @@ contributions.
 - `<C-L>` `:WBR` - move center barrier to the right,
 - `<C-H>` `:WBL` - move center barrier to the left,
 - `<C-J>` - change cursor position to next window,
-- `<C-K>` - change cursor position to previous window.
+- `<C-K>` - change cursor position to previous window,
+- `<C-M>` - jump cursor position to first/master pane.
 
 ### Upcoming changes and todo
 
@@ -53,7 +55,7 @@ Install to `~/.vim/plugin/dwm.vim` and `~/.vim/autoload/dwm.vim`, or use Vim-Plu
 `Plug 'QSmally/DWM'`.
 
 ```
-mkdir -p ~/.vim/plugin ~/.vim/doc ~/.vim/autoload; \
+mkdir -p ~/.vim/plugin ~/.vim/autoload ~/.vim/doc; \
 wget -qO ~/.vim/plugin/dwm.vim https://raw.github.com/QSmally/DWM/master/plugin/dwm.vim; \
 wget -qO ~/.vim/autoload/dwm.vim https://raw.github.com/QSmally/DWM/master/autoload/dwm.vim; \
 wget -qO ~/.vim/doc/dwm.txt https://raw.github.com/QSmally/DWM/master/doc/dwm.txt
@@ -67,6 +69,13 @@ You can use `curl -so` if you prefer it over `wget`.
 - `g:dwm_master_pane_width`: set the width of the master pane (e.g. `g:dwm_master_pane_width=85`)
 
 <!-- TODO: Expand doc to README -->
+
+To get fullscreen-mode capability, I recommend using `taylor/vim-zoomwin`:
+
+```vimscript
+Plug 'taylor/vim-zoomwin'
+nnoremap <silent> <C-q> :ZoomWin<CR>
+```
 
 To use a mouse to select windows and resize panes:
 

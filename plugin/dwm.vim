@@ -11,8 +11,8 @@
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
-" Last Changed: Monday, 5 July 2023
-"      Version: 0.2.3 (fork)
+" Last Changed: Monday, 6 July 2023
+"      Version: 0.2.4 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
 "               documentation.
@@ -54,7 +54,7 @@ nnoremap <silent> <Plug>(dwm_barrier_left) :WBL<CR>
 " command! DWM call dwm#toggle()
 command! WRR call dwm#rotate(1)
 command! WRL call dwm#rotate(0)
-command! New call dwm#new_window()
+command! -nargs=? -complete=file -bang New call dwm#new_window(<bang>0, <q-args>)
 command! -count=0 Close call dwm#close_window(v:count == 0 ? <count> : v:count)
 command! -count=0 Switch call dwm#focus_window(v:count == 0 ? <count> : v:count)
 command! WBR call dwm#resize_master(1)
@@ -71,11 +71,13 @@ if g:dwm_default_keys
     nnoremap <silent> <C-J> :wincmd w<CR>
     nnoremap <silent> <C-K> :wincmd W<CR>
     nnoremap <silent> <C-M> :1wincmd w<CR>
-    if !hasmapto('<Plug>(dwm_new_window)')    | nmap <C-N> <Plug>(dwm_new_window)    | endif
-    if !hasmapto('<Plug>(dwm_close_window)')  | nmap <C-C> <Plug>(dwm_close_window)  | endif
-    if !hasmapto('<Plug>(dwm_focus_window)')  | nmap <C-@> <Plug>(dwm_focus_window)  | endif
-    if !hasmapto('<Plug>(dwm_barrier_right)') | nmap <C-L> <Plug>(dwm_barrier_right) | endif
-    if !hasmapto('<Plug>(dwm_barrier_left)')  | nmap <C-H> <Plug>(dwm_barrier_left)  | endif
+    nnoremap <C-P> :New
+
+    if !hasmapto('<Plug>(dwm_new_window)')    | nnoremap <C-N> <Plug>(dwm_new_window)    | endif
+    if !hasmapto('<Plug>(dwm_close_window)')  | nnoremap <C-C> <Plug>(dwm_close_window)  | endif
+    if !hasmapto('<Plug>(dwm_focus_window)')  | nnoremap <C-@> <Plug>(dwm_focus_window)  | endif
+    if !hasmapto('<Plug>(dwm_barrier_right)') | nnoremap <C-L> <Plug>(dwm_barrier_right) | endif
+    if !hasmapto('<Plug>(dwm_barrier_left)')  | nnoremap <C-H> <Plug>(dwm_barrier_left)  | endif
 endif
 
 " Mark: init

@@ -4,23 +4,15 @@
 " after loading windows from a session.
 "
 function! dwm#init()
-    call dwm#auto_layout()
+    call dwm#layout()
     autocmd BufWinEnter * call dwm#auto_layout()
     autocmd VimResized * call dwm#layout()
 endfunction
 
 function dwm#auto_layout()
-    if winnr('$') == 1 || &l:buftype == 'quickfix' || win_gettype(0) == 'popup'
-        return
-    endif
-
-    if !&l:buflisted && &l:filetype != 'help' && !len(&l:filetype)
-        return
-    endif
-
-    if &columns < g:dwm_enable_width
-        return
-    endif
+    if winnr('$') == 1 || &l:buftype == 'quickfix' || win_gettype(0) == 'popup' | return | endif
+    if !&l:buflisted && &l:filetype != 'help' && !len(&l:filetype) | return | endif
+    if &columns < g:dwm_enable_width | return | endif
 
     call dwm#layout()
 endfunction
@@ -82,13 +74,11 @@ endfunction
 " Empty buffer viewport added as the new master pane, moving the old master
 " pane to the top of the stack pane.
 "
-" TODO: Accept filename to populate window with buffer contents
-"
-function! dwm#new_window()
+function! dwm#new_window(bang, fname)
     call dwm#stack_master(1)
-    topleft new
+    exec 'new ' . a:fname
     call dwm#focus_window(0)
-    call dwm#focus_window(0)
+    if !a:bang | call dwm#focus_window(0) | endif
 endfunction
 
 "
@@ -120,7 +110,7 @@ endfunction
 " whenever a new window was added.
 "
 function! dwm#layout()
-    if winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
+    if winnr('$') == 1 || winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
         return
     endif
 

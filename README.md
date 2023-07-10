@@ -34,6 +34,10 @@ contributions.
 - `<C-K>` - change cursor position to previous window,
 - `<C-M>` - jump cursor position to first/master pane.
 
+For Darwin operating systems, `<C-@>` is activated by pressing control-space instead of actually
+`@`. Linux distributions may need to remap `<Plug>(dwm_focus_window)` to `<C-Space>` in order to get
+the intended DWM behaviour.
+
 ### Upcoming changes and todo
 
 * Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
@@ -65,10 +69,10 @@ You can use `curl -so` if you prefer it over `wget`.
 
 ## Configuration
 
-- `g:dwm_default_keys`: if set to a falsey value, prevents key mapping.
-- `g:dwm_master_pane_width`: set the width of the master pane (e.g. `g:dwm_master_pane_width=85`)
-
-<!-- TODO: Expand doc to README -->
+- `g:dwm_default_keys`: if set to a falsey value, prevents key mapping,
+- `g:dwm_enable_width`: total columns in order for DWM behaviour to enable,
+- `g:dwm_master_pane_width`: set the width of the master pane in percentage or columns,
+- `g:dwm_skip_width`/`height`: (half of) window column in order to ignore window from layout.
 
 To get fullscreen-mode capability, I recommend using `taylor/vim-zoomwin`:
 

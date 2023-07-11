@@ -87,6 +87,8 @@ map yet:
 
 To customise the mapping, you can override the Plug bindings:
 >
+    nnoremap <Nop> <Plug>(dwm_rotate_right)
+    nnoremap <Nop> <Plug>(dwm_rotate_left)
     nnoremap <C-N> <Plug>(dwm_new_window)
     nnoremap <C-C> <Plug>(dwm_close_window)
     nnoremap <C-@> <Plug>(dwm_focus_window)

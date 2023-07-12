@@ -42,7 +42,7 @@ the intended DWM behaviour.
 
 * Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
 * In low-width sessions, automatically do inline resizing of currently-focussed window,
-* `:DWM` (and `:DWM!`) command to toggle functionality through a session.
+* Tiling modes like Suckless DWM, as well as floating windows.
 
 ### Preview of the tiled layout
 
@@ -87,8 +87,6 @@ To use a mouse to select windows and resize panes:
 - `set ttymouse=xterm2`: recognise mouse codes for the xterm2 terminal type.
 
 ## Remarks
-
-There is only one tiled layout available right now, but do not hesitate to *fork it!*
 
 For fun, I urge you to try using `dwm.vim` in `vim`, in `tmux`, in `ssh`, in `tmux`, in `xterm`, in `dwm`.
 

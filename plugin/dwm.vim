@@ -11,7 +11,7 @@
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
-" Last Changed: Monday, 6 July 2023
+" Last Changed: Wednesday, 12 July 2023
 "      Version: 0.2.4 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
@@ -41,7 +41,6 @@ let g:loaded_dwm = 1
 "
 
 " Mark: public API
-" nnoremap <silent> <Plug>(dwm_toggle) :DWM<CR>
 nnoremap <silent> <Plug>(dwm_rotate_right) :WRR<CR>
 nnoremap <silent> <Plug>(dwm_rotate_left) :WRL<CR>
 nnoremap <silent> <Plug>(dwm_new_window) :New<CR>
@@ -51,7 +50,6 @@ nnoremap <silent> <Plug>(dwm_barrier_right) :WBR<CR>
 nnoremap <silent> <Plug>(dwm_barrier_left) :WBL<CR>
 
 " Mark: commands
-" command! DWM call dwm#toggle()
 command! WRR call dwm#rotate(1)
 command! WRL call dwm#rotate(0)
 command! -nargs=? -complete=file -bang New call dwm#new_window(<bang>0, <q-args>)
@@ -62,7 +60,6 @@ command! WBL call dwm#resize_master(-1)
 
 " Mark: defaults
 if !exists('g:dwm_default_keys')    | let g:dwm_default_keys = 1      | endif
-" if !exists('g:dwm_default_enabled') | let g:dwm_default_enabled = 1   | endif
 if !exists('g:dwm_enable_width')    | let g:dwm_enable_width = 2 * 81 | endif
 if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80 / 2   | endif
 if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12 / 2  | endif

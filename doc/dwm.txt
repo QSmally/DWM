@@ -18,12 +18,12 @@ CONTENTS                                                        *dwm-contents*
 ==============================================================================
 INTRODUCTION                                                *dwm-introduction*
 
-DWM adds tiled window management to Vim. It is highly inspired by the Dynamic
-Window Manager tiled layout.
+DWM adds tiled window management to Vim. It's highly inspired by the Dynamic
+Window Manager tiled layouts.
 
 Windows are always organised defined by the following layout, consisting of a
-master pane on the left and a stacked pane on the right side. QuickFix and
-floating windows are ignored by the layout.
+master pane on the left and a stacked pane on the right. QuickFix and floating
+panes are ignored by the layout controller.
 
     +--------------+------------------+
     |              |        S1        |
@@ -85,7 +85,7 @@ map yet:
 
 *[w]* is the stacked pane viewport number starting at 1. See the visual layout.
 
-To customise the mapping, you can override the Plug bindings:
+To customise the mapping, you can override the default Plug bindings:
 >
     nnoremap <Nop> <Plug>(dwm_rotate_right)
     nnoremap <Nop> <Plug>(dwm_rotate_left)

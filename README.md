@@ -1,9 +1,9 @@
 
 # Tiling window manager for Vim
 
-`dwm.vim` adds tiled window management to Vim. It is highly inspired by [dwm](http://dwm.suckless.org/)
-(Dynamic Window Manager) tiled layout management. Windows are always organised defined by the
-following layout, consisting of a master pane on the left and a stacked pane on the right side.
+`dwm.vim` adds tiled window management to Vim. It's highly inspired by [dwm](https://dwm.suckless.org/)
+(Dynamic Window Manager) tiled layouts. Windows are always organised defined by the following
+layout, consisting of a master pane on the left and a stacked pane on the right.
 
 <pre align="center"><code>
 +--------------+------------------+   +--------------+------------------+
@@ -42,12 +42,13 @@ the intended DWM behaviour.
 
 * Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
 * In low-width sessions, automatically do inline resizing of currently-focussed window,
-* Tiling modes like Suckless DWM, as well as floating windows.
+* Tiling modes like Suckless DWM, awesomewm, including floating windows.
 
 ### Preview of the tiled layout
 
 <!-- Old one to display no qf window -->
 ![](http://i.imgur.com/TKL4i.png)
+
 <!-- If a new one is wanted -->
 <!-- ![](http://i.imgur.com/yXCntB2.png) -->
 

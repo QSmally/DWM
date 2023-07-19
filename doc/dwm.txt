@@ -46,22 +46,32 @@ provided by VimFiler, Minimap and Visual Split.
 ==============================================================================
 COMMANDS                                                        *dwm-commands*
 
-                                                         *:New* *:Close* *:Switch*
-Management~
-    Management commands which creates a new window with an empty or file-
-    populated buffer in the master or stack pane, closes the focussed window
-    or switches the current window to the master pane viewport.
-
+                                                                        *:New*
+:New[!] [file]~
+    Empty argument results in a 'no name' window. A bang spawns a new window
+    in the first position of the stacked pane.
+    Binds to <Plug>(dwm_new_window)
+                                                                      *:Close*
+:[w]Close~
+    Either the currently-active window or |[w]| gets closed.
+    Binds to <Plug>(dwm_close_window)
+                                                                     *:Switch*
+:[w]Switch~
+    Focusses the currently-active window, or |[w]|, by placing it in the
+    master pane and pushing the old master window to the top of the stacked
+    pane.
+    Binds to <Plug>(dwm_focus_window)
                                                                    *:WRR* *:WRL*
-Rotation~
+:WRR :WRL~
     Performs a clockwise or counter clockwise rotate operation on all the
     windows, including the master pane, for Window Rotate Right or Window
     Rotate Left.
-
+    Binds to <Plug>(dwm_rotate_right) and <Plug>(dwm_rotate_left)
                                                                    *:WBR* *:WBL*
-Barrier~
-    Moving the center barrier between the master and stack panes either with
-    Window Barrier Right or Window Barrier Left.
+:WBR :WBL~
+    Moves the center barrier between the master and stacked pane to the right
+    or left with Window Barrier Right and Window Barrier Left.
+    Binds to <Plug>(dwm_barrier_right) and <Plug>(dwm_barrier_left)
 
 
 ==============================================================================
@@ -173,7 +183,7 @@ Maintained previously by
 
     Stanislas Polu (spolu)
 
-Contributors in alphabetical order
+Previously contributed
 
     Dan Sapala (dsapala)
     Matthias Vogelgesang (matze)

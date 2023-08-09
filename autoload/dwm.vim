@@ -87,12 +87,12 @@ endfunction
 " window is master already, the stack top is elected to be swapped with the
 " master pane.
 "
-function! dwm#focus_window(win)
+function! dwm#focus_window(win, ...)
     if winnr('$') == 1 || winnr('$') <= a:win
         return
     endif
 
-    if winnr() == 1
+    if !get(a:, 1, 0) && winnr() == 1
         wincmd w
     endif
 

@@ -11,7 +11,7 @@
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
-" Last Changed: Wednesday, 12 July 2023
+" Last Changed: Monday, 30 August 2023
 "      Version: 0.2.4 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
@@ -70,9 +70,14 @@ if g:dwm_default_keys
     nnoremap <silent> <C-M> :1wincmd w<CR>
     nnoremap <C-P> :New
 
+    if !hasmapto('<Plug>(dwm_focus_window)')
+        " Note: Darwin (Apple Terminal) maps 'C-@' to C-Space
+        nnoremap <C-@> <Plug>(dwm_focus_window)
+        nnoremap <C-Space> <Plug>(dwm_focus_window)
+    endif
+
     if !hasmapto('<Plug>(dwm_new_window)')    | nnoremap <C-N> <Plug>(dwm_new_window)    | endif
     if !hasmapto('<Plug>(dwm_close_window)')  | nnoremap <C-C> <Plug>(dwm_close_window)  | endif
-    if !hasmapto('<Plug>(dwm_focus_window)')  | nnoremap <C-@> <Plug>(dwm_focus_window)  | endif
     if !hasmapto('<Plug>(dwm_barrier_right)') | nnoremap <C-L> <Plug>(dwm_barrier_right) | endif
     if !hasmapto('<Plug>(dwm_barrier_left)')  | nnoremap <C-H> <Plug>(dwm_barrier_left)  | endif
 endif

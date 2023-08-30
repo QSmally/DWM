@@ -50,6 +50,7 @@ The QuickFix window stays in place whenever a window operation is done.
 <!-- If a new one is wanted -->
 <!-- ![](http://i.imgur.com/yXCntB2.png) -->
 
+<!-- TODO: New colourscheme screenshot -->
 ![](http://i.imgur.com/GsjB1od.png)
 
 ## Installation
@@ -73,7 +74,7 @@ You can use `curl -so` if you prefer it over `wget`.
 - `g:dwm_master_pane_width`: set the width of the master pane in percentage or columns,
 - `g:dwm_skip_width`/`height`: (half of) window column in order to ignore window from layout.
 
-To get fullscreen-mode capability, I recommend using `taylor/vim-zoomwin`:
+To get fullscreen-mode capability, I recommend using [`taylor/vim-zoomwin`](https://github.com/taylor/vim-zoomwin):
 
 ```vimscript
 Plug 'taylor/vim-zoomwin'

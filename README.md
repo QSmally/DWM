@@ -5,7 +5,7 @@
 (Dynamic Window Manager) tiled layouts. Windows are always organised defined by the following
 layout, consisting of a master pane on the left and a stacked pane on the right.
 
-<pre align="center"><code>
+```
 +--------------+------------------+   +--------------+------------------+
 |              |        S1        |   |              |        S1        |
 |              |                  |   |              | ---------------- |
@@ -15,7 +15,7 @@ layout, consisting of a master pane on the left and a stacked pane on the right.
 |              | ---------------- |   +--------------+------------------+
 |              |        S3        |   |      qf                         |
 +--------------+------------------+   +---------------------------------+
-</code></pre>
+```
 
 Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
 contributions.
@@ -34,9 +34,7 @@ contributions.
 - `<C-K>` - change cursor position to previous window,
 - `<C-M>` - jump cursor position to first/master pane.
 
-For Darwin operating systems, `<C-@>` is activated by pressing control-space instead of actually
-`@`. Linux distributions may need to remap `<Plug>(dwm_focus_window)` to `<C-Space>` in order to get
-the intended DWM behaviour.
+The QuickFix window stays in place whenever a window operation is done.
 
 ### Upcoming changes and todo
 

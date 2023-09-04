@@ -153,6 +153,8 @@ viewport entered with either of those dimensions.
 ==============================================================================
 CHANGELOG                                                      *dwm-changelog*
 
+= 0.2.5
+    - fix maps for certain Debian distributions
 = 0.2.4
     - :New[!] with filename, stack panel and <C-P> dmenu binding
     - fix window focus binding in Darwin operating systems

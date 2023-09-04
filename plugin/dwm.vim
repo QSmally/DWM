@@ -11,7 +11,7 @@
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
-" Last Changed: Monday, 30 August 2023
+" Last Changed: Monday, 4 September 2023
 "      Version: 0.2.4 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
@@ -65,10 +65,10 @@ if !exists('g:dwm_skip_width')      | let g:dwm_skip_width = 80 / 2   | endif
 if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12 / 2  | endif
 
 if g:dwm_default_keys
-    nnoremap <silent> <C-J> :wincmd w<CR>
-    nnoremap <silent> <C-K> :wincmd W<CR>
-    nnoremap <silent> <C-M> :1wincmd w<CR>
-    nnoremap <C-P> :New
+    nnoremap <silent> <C-j> :wincmd w<CR>
+    nnoremap <silent> <C-k> :wincmd W<CR>
+    nnoremap <silent> <C-m> :1wincmd w<CR>
+    nnoremap <C-p> :New
 
     if !hasmapto('<Plug>(dwm_focus_window)')
         " Note: Darwin (Apple Terminal) maps 'C-@' to C-Space
@@ -76,10 +76,10 @@ if g:dwm_default_keys
         nnoremap <C-Space> <Plug>(dwm_focus_window)
     endif
 
-    if !hasmapto('<Plug>(dwm_new_window)')    | nnoremap <C-N> <Plug>(dwm_new_window)    | endif
-    if !hasmapto('<Plug>(dwm_close_window)')  | nnoremap <C-C> <Plug>(dwm_close_window)  | endif
-    if !hasmapto('<Plug>(dwm_barrier_right)') | nnoremap <C-L> <Plug>(dwm_barrier_right) | endif
-    if !hasmapto('<Plug>(dwm_barrier_left)')  | nnoremap <C-H> <Plug>(dwm_barrier_left)  | endif
+    if !hasmapto('<Plug>(dwm_new_window)')    | nnoremap <C-n> <Plug>(dwm_new_window)    | endif
+    if !hasmapto('<Plug>(dwm_close_window)')  | nnoremap <C-c> <Plug>(dwm_close_window)  | endif
+    if !hasmapto('<Plug>(dwm_barrier_right)') | nnoremap <C-l> <Plug>(dwm_barrier_right) | endif
+    if !hasmapto('<Plug>(dwm_barrier_left)')  | nnoremap <C-h> <Plug>(dwm_barrier_left)  | endif
 endif
 
 " Mark: init

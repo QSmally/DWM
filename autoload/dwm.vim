@@ -51,6 +51,16 @@ function! dwm#fix_pane_width()
 endfunction
 
 "
+" An internal helper which executes some 'cmd' on all windows, returning the
+" cursor to the original window. Autocommands and jump stack left unchanged.
+"
+function! dwm#windo(cmd)
+    let l:curwin = winnr()
+    exec 'noautocmd keepjumps windo ' . a:cmd
+    exec l:curwin . 'wincmd w'
+endfunction
+
+"
 " For correctly rendering the QuickFix window in the layout, DWM closes and
 " reopens the viewport when it's found before adjusting the layout. Its goal
 " is to always render QuickFix in its default position on screen.
@@ -136,6 +146,7 @@ function! dwm#focus_window(win, ...)
 
     call dwm#fix_pane_width()
     call dwm#fix_qf_window()
+    call dwm#windo('norm zz')
 endfunction
 
 "

@@ -1,20 +1,53 @@
 
 "
 " Automatic adjusting layout at startup-time (for 'vim -o ...') as well as
-" after loading windows from a session.
+" after loading windows from a session. Redraws the window layout to keep DWM
+" looking like DWM.
 "
 function! dwm#init()
     call dwm#layout()
-    autocmd BufWinEnter * call dwm#auto_layout()
+    autocmd BufWinEnter * call dwm#conditional_layout()
     autocmd VimResized * call dwm#layout()
 endfunction
 
-function dwm#auto_layout()
+function dwm#conditional_layout()
     if winnr('$') == 1 || &l:buftype == 'quickfix' || win_gettype(0) == 'popup' | return | endif
     if !&l:buflisted && &l:filetype != 'help' && !len(&l:filetype) | return | endif
     if &columns < g:dwm_enable_width | return | endif
 
     call dwm#layout()
+endfunction
+
+function! dwm#layout()
+    if winnr('$') == 1 || winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
+        return
+    endif
+
+    " Mark: move new window to stack top
+    wincmd K
+
+    " Mark: refocus new window
+    call dwm#focus_window(0)
+    call dwm#focus_window(0)
+endfunction
+
+"
+" Adjusts the split between the master and stack panes by changing the width
+" of the master pane. If 'g:dwm_master_pane_width' is defined, the panes will
+" be resized accordingly, otherwise it will be a 50% split.
+"
+function! dwm#fix_pane_width()
+    " Mark: all windows equally tall and wide
+    wincmd =
+
+    " Mark: resize the master pane if the user defined it
+    if exists('g:dwm_master_pane_width')
+        if type(g:dwm_master_pane_width) == type('')
+            exec 'vertical resize ' . ((str2nr(g:dwm_master_pane_width) * &columns) / 100)
+        else
+            exec 'vertical resize ' . g:dwm_master_pane_width
+        endif
+    endif
 endfunction
 
 "
@@ -101,25 +134,8 @@ function! dwm#focus_window(win, ...)
     exec l:curwin . 'wincmd w'
     exec 'wincmd ' . (&columns >= g:dwm_enable_width ? 'H' : 'K')
 
-    call dwm#resize_pane_width()
+    call dwm#fix_pane_width()
     call dwm#fix_qf_window()
-endfunction
-
-"
-" Redraws the window layout, which is used by the BufWinEnter autocommand
-" whenever a new window was added.
-"
-function! dwm#layout()
-    if winnr('$') == 1 || winwidth(0) < g:dwm_skip_width || winheight(0) < g:dwm_skip_height
-        return
-    endif
-
-    " Mark: move new window to stack top
-    wincmd K
-
-    " Mark: refocus new window
-    call dwm#focus_window(0)
-    call dwm#focus_window(0)
 endfunction
 
 "
@@ -146,25 +162,6 @@ function! dwm#close_window(win)
 
     let l:fix = l:curwin < l:tarwin ? 0 : -1
     exec l:curwin + l:fix . 'wincmd w'
-endfunction
-
-"
-" Adjusts the split between the master and stack panes by changing the width
-" of the master pane. If 'g:dwm_master_pane_width' is defined, the panes will
-" be resized accordingly, otherwise it will be a 50% split.
-"
-function! dwm#resize_pane_width()
-    " Mark: all windows equally tall and wide
-    wincmd =
-
-    " Mark: resize the master pane if the user defined it
-    if exists('g:dwm_master_pane_width')
-        if type(g:dwm_master_pane_width) == type('')
-            exec 'vertical resize ' . ((str2nr(g:dwm_master_pane_width) * &columns) / 100)
-        else
-            exec 'vertical resize ' . g:dwm_master_pane_width
-        endif
-    endif
 endfunction
 
 "
@@ -196,5 +193,5 @@ function! dwm#rotate(clockwise)
     endif
 
     exec 'wincmd ' . (&columns >= g:dwm_enable_width ? 'H' : 'K')
-    call dwm#resize_pane_width()
+    call dwm#fix_pane_width()
 endfunction

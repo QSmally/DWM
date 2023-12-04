@@ -42,6 +42,8 @@ dual-screen preview/editor setups) and ignores the QuickFix window in its
 panes. In the future, DWM will render around fixed-width windows such as those
 provided by VimFiler, Minimap and Visual Split.
 
+I recommend CtrlP (fork at ctrlpvim/ctrlp.vim) as dmenu-like implementation.
+
 
 ==============================================================================
 COMMANDS                                                        *dwm-commands*
@@ -81,7 +83,7 @@ When |'g:dwm_default_keys'| is not defined or set to 1, the following keys are
 mapped to the commands in |dwm-commands| if they haven't been overwritten by a
 map yet:
 
-  <C-N>     |:New|        new empty master pane window
+            |:New|        new empty master pane window
   <C-P>     |:New[!]|...  opens dmenu-like prompt for the master or stack pane
   [w]<C-C>  |:[w]Close|   close |[w]| or current window
   [w]<C-@>  |:[w]Switch|  focus |[w]|, current or first window on master pane
@@ -91,7 +93,6 @@ map yet:
   <C-H>     |:WBL|        move center barrier left
   <C-J>                 change cursor position to next window
   <C-K>                 change cursor position to previous window
-  <C-M>                 jump cursor position to first/master pane
 
 *[w]* is the stacked pane viewport number starting at 1. See the visual layout.
 
@@ -99,7 +100,6 @@ To customise the mapping, you can override the default Plug bindings:
 >
     nnoremap <Nop> <Plug>(dwm_rotate_right)
     nnoremap <Nop> <Plug>(dwm_rotate_left)
-    nnoremap <C-N> <Plug>(dwm_new_window)
     nnoremap <C-C> <Plug>(dwm_close_window)
     nnoremap <C-@> <Plug>(dwm_focus_window)
     nnoremap <C-L> <Plug>(dwm_barrier_right)
@@ -156,8 +156,9 @@ CHANGELOG                                                      *dwm-changelog*
 = 0.2.5
     - fix maps for certain Debian distributions
     - rerender windows to center with each window enter/exit
+    - add cycle key binding for terminal views
 = 0.2.4
-    - :New[!] with filename, stack panel and <C-P> dmenu binding
+    - :New[!] with filename and spawn in stack panel
     - fix window focus binding in Darwin operating systems
 = 0.2.3
     - modifiers to close and focus bindings

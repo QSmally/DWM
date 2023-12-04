@@ -11,8 +11,8 @@
 " Name Of File: dwm.vim
 "  Description: Dynamic Window Manager behaviour for Vim
 "   Maintainer: Joey Smalen (QSmally, Smally) <github@qbot.eu>
-" Last Changed: Monday, 20 September 2023
-"      Version: 0.2.4 (fork)
+" Last Changed: Monday, 04 December 2023
+"      Version: 0.2.5 (fork)
 "        Usage: This file should reside in the plugin directory and be
 "               automatically sourced. For more help, see supplied
 "               documentation.
@@ -66,9 +66,9 @@ if !exists('g:dwm_skip_height')     | let g:dwm_skip_height = 12 / 2  | endif
 
 if g:dwm_default_keys
     nnoremap <silent> <C-j> :wincmd w<CR>
+    tnoremap <silent> <C-j> <C-w>w
     nnoremap <silent> <C-k> :wincmd W<CR>
-    nnoremap <silent> <C-m> :1wincmd w<CR>
-    nnoremap <C-p> :New
+    tnoremap <silent> <C-k> <C-w>W
 
     if !hasmapto('<Plug>(dwm_focus_window)')
         " Note: Darwin (Apple Terminal) maps 'C-@' to C-Space

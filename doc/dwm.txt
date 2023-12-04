@@ -25,13 +25,13 @@ Windows are always organised defined by the following layout, consisting of a
 master pane on the left and a stacked pane on the right. QuickFix and floating
 panes are ignored by the layout controller.
 
-    +--------------+------------------+
-    |              |        S1        |
-    |              | ---------------- |
-    |      M0      |        S2        |
-    |              | ---------------- |
-    |              |        S3        |
-    +--------------+------------------+
+    +------------------+------------------+
+    |                  |        S1        |
+    |                  | ---------------- |
+    |        M0        |        S2        |
+    |                  | ---------------- |
+    |                  |        S3        |
+    +------------------+------------------+
 
 GitHub archive:
 
@@ -41,6 +41,8 @@ Currently, DWM supports a one-column mode when Vim's width is low (such as
 dual-screen preview/editor setups) and ignores the QuickFix window in its
 panes. In the future, DWM will render around fixed-width windows such as those
 provided by VimFiler, Minimap and Visual Split.
+
+I recommend ZoomWin (at taylor/vim-zoomwin) as monocle-like implementation.
 
 I recommend CtrlP (fork at ctrlpvim/ctrlp.vim) as dmenu-like implementation.
 

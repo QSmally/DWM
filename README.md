@@ -6,15 +6,15 @@
 layout, consisting of a master pane on the left and a stacked pane on the right.
 
 ```
-+--------------+------------------+   +--------------+------------------+
-|              |        S1        |   |              |        S1        |
-|              |                  |   |              | ---------------- |
-|              | ---------------- |   |      M0      |        S2        |
-|      M0      |        S2        |   |              | ---------------- |
-|              |                  |   |              |        S3        |
-|              | ---------------- |   +--------------+------------------+
-|              |        S3        |   |      qf                         |
-+--------------+------------------+   +---------------------------------+
++------------------+------------------+   +------------------+------------------+
+|                  |        S1        |   |                  |        S1        |
+|                  | ________________ |   |                  | ---------------- |
+|                  |                  |   |        M0        |        S2        |
+|        M0        |        S2        |   |                  | ---------------- |
+|                  | ________________ |   |                  |        S3        |
+|                  |                  |   +------------------+------------------+
+|                  |        S3        |   |        qf                           |
++------------------+------------------+   +-------------------------------------+
 ```
 
 Fork (detached) from [spolu/dwm.vim](https://github.com/spolu/dwm.vim) with fixes and my private
@@ -22,8 +22,7 @@ contributions.
 
 ### Commands and bindings
 
-- `<C-N>` `:New` - spawn a new empty window in the master pane,
-- `<C-P>` - enter dmenu-like `:New[!]` to open a file in the master or stack pane,
+- `:New` - spawn a new empty window in the master pane,
 - `[w]<C-C>` `:[w]Close` - close `[w]` or current window and adjusts layout,
 - `[w]<C-@>` `:[w]Switch` - focus `[w]`, current or first window on the master pane,
 - `:WRR` - rotate window layout to the right,
@@ -31,16 +30,14 @@ contributions.
 - `<C-L>` `:WBR` - move center barrier to the right,
 - `<C-H>` `:WBL` - move center barrier to the left,
 - `<C-J>` - change cursor position to next window,
-- `<C-K>` - change cursor position to previous window,
-- `<C-M>` - jump cursor position to first/master pane.
+- `<C-K>` - change cursor position to previous window.
 
 The QuickFix window stays in place whenever a window operation is done.
 
 ### Upcoming changes and todo
 
-* Toggleable 80-column (and customisable) master pane width or 50% when >80 columns is available,
 * In low-width sessions, automatically do inline resizing of currently-focussed window,
-* Tiling modes like Suckless DWM, awesomewm, including floating windows.
+* Tiling modes like Suckless DWM and awesomewm, including floating windows, monocle layout.
 
 ### Preview of the tiled layout
 
@@ -74,11 +71,17 @@ You can use `curl -so` if you prefer it over `wget`.
 - `g:dwm_master_pane_width`: set the width of the master pane in percentage or columns,
 - `g:dwm_skip_width`/`height`: (half of) window column in order to ignore window from layout.
 
-To get fullscreen-mode capability, I recommend using [`taylor/vim-zoomwin`](https://github.com/taylor/vim-zoomwin):
+To get monocle-like capability, I recommend using [`taylor/vim-zoomwin`](https://github.com/taylor/vim-zoomwin):
 
 ```vimscript
 Plug 'taylor/vim-zoomwin'
 nnoremap <silent> <C-q> :ZoomWin<CR>
+```
+
+To get dmenu-like capability, I recommend using [`ctrlpvim/ctrlp.vim` (fork from `kien/ctrlp.vim`)](https://github.com/ctrlpvim/ctrlp.vim):
+
+```vimscript
+Plug 'ctrlpvim/ctrlp.vim'
 ```
 
 To use a mouse to select windows and resize panes:
